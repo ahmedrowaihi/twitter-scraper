@@ -1,0 +1,16 @@
+{
+  "name": "twitter-scraper",
+  "version": "1.0.0",
+  "author": {
+    "name": "Ahmed Rowaihi",
+    "url": ""
+  },
+  "main": "main.js",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^13.1.1"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^5.4.4"
+  }
+}
