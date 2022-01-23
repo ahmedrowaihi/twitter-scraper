@@ -1,6 +1,7 @@
 {
   "name": "twitter-scraper",
   "version": "1.0.0",
+  "type": "module",
   "author": {
     "name": "Ahmed Rowaihi",
     "url": "https://github.com/ahmedrowaihi/twitter-scraper.git"
@@ -9,7 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.2",
-    "puppeteer": "^13.1.1"
+    "puppeteer": "^13.1.1",
+    "puppeteer-core": "^13.1.1"
   },
   "scripts": {
     "dev": "nodemon main.js"
