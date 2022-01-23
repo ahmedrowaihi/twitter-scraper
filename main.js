@@ -37,7 +37,7 @@ app.post("/", async ({ body: { spaceURL } }, res) => {
     });
     return;
   }
-  page.on("response", async (e) => {
+  page.on("request", async (e) => {
     if (RegExp(".m3u8").test(e.url())) {
       await browser.close();
       res.status(200).json({
@@ -47,12 +47,14 @@ app.post("/", async ({ body: { spaceURL } }, res) => {
       return;
     }
   });
+
   setTimeout(async () => {
     await browser.close();
-    res.status(400).json({
-      spaceURL,
-      error: "Fetching Time Out!",
-    });
+    if (!res.headersSent)
+      res.status(400).json({
+        spaceURL,
+        error: "Fetching Time Out!",
+      });
     return;
   }, 15 * 1000);
 });

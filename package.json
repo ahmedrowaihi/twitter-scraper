@@ -10,7 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.2",
-    "puppeteer": "^13.1.1",
     "puppeteer-core": "^13.1.1"
   },
   "scripts": {
