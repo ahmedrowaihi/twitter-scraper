@@ -1,6 +1,5 @@
-import Puppeter from "puppeteer-core";
 import express, { json, urlencoded } from "express";
-
+import Puppeter from "puppeteer-core";
 const app = express();
 
 const PORT = 3000;
