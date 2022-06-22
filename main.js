@@ -10,6 +10,7 @@ app.use(urlencoded({ extended: true }));
 app.post("/", async ({ body: { spaceURL } }, res) => {
   const browser = await Puppeter.launch({
     executablePath: "chrome",
+    headless: false,
   });
 
   const page = await browser.newPage();
@@ -18,16 +19,11 @@ app.post("/", async ({ body: { spaceURL } }, res) => {
     await page.goto(spaceURL, {
       waitUntil: "networkidle2",
     });
-    const PlayRecording = '[aria-label="Play recording"]';
-    const Play = '[aria-label="Play"]';
+    const PlayRecording = '[aria-label^="Play rec"]';
     await page.waitForSelector(PlayRecording, {
       timeout: 5000,
     });
-    await (await page.$(PlayRecording)).click();
-    await page.waitForSelector(Play, {
-      timeout: 5000,
-    });
-    await (await page.$(Play)).click();
+    await page.click(PlayRecording);
   } catch (error) {
     await browser.close();
     res.status(400).json({
@@ -37,14 +33,13 @@ app.post("/", async ({ body: { spaceURL } }, res) => {
     return;
   }
   page.on("request", async (e) => {
-    if (RegExp(".m3u8").test(e.url())) {
-      await browser.close();
-      res.status(200).json({
-        spaceURL,
-        spaceMediaURL: e.url().toString(),
-      });
-      return;
-    }
+    if (!RegExp(".m3u8").test(e.url())) return;
+    await browser.close();
+    res.status(200).json({
+      spaceURL,
+      spaceMediaURL: e.url().toString(),
+    });
+    return page.off("request");
   });
 
   setTimeout(async () => {
